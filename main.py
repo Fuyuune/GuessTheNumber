@@ -22,7 +22,7 @@ ttk.Button(mainframe, text="Calculate").grid(column=2, row=3, sticky=W)
 randomNumber = random.randrange(1,101)
 print("DEBUG: " + str(randomNumber))
 
-def getHint():
+def getHint(*args):
   if guess < randomNumber:
     print("The number you're looking for is greater than your number.")
   elif guess > randomNumber:
