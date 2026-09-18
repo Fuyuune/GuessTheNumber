@@ -6,25 +6,35 @@ randomNumber = random.randrange(1,100)
 print("DEBUG: " + str(randomNumber))
 
 def convert():
-    input_value = int(guess_entry.get())
-    return input_value
+    try:
+      input_value = int(guess_entry.get())
+      return input_value
+    except ValueError:
+        result_content.set("Please enter a valid number!")
+        result_label['foreground'] = "red"
+        return None 
 
 def getHint():
-  result_content.set("")
+  result_content.set("")  
   guess_value = convert()
-  if guess_value == 0:
-     hint_content.set("Please enter a number first!")
-  elif guess_value < randomNumber:
-    hint_content.set("The number you're looking for is greater than your number.")
-  elif guess_value > randomNumber:
-    hint_content.set("The number you're looking for is lesser than your number.")
+  if guess_value is None:
+      return
+
+  if guess_value < randomNumber:
+    hint_content.set("Hint: The number you're looking for is greater than your number.")
+  else:
+    hint_content.set("Hint: The number you're looking for is lesser than your number.")
 
 def check():
   try:
     hint_content.set("")
     guess_value = convert()
+    if guess_value is None:
+        return
+
     triesCount.set(triesCount.get() + 1)
     triesCount_label['text'] = f"Tries: {triesCount.get()}"
+
     if guess_value != randomNumber:
         result_content.set("Your number is not correct. Try again!")
         result_label['foreground'] = "red"
